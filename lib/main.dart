@@ -1,4 +1,6 @@
+import 'package:chess_clock/player.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'home.dart';
 
@@ -18,7 +20,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Home(),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => Player()),
+          ChangeNotifierProvider(create: (_) => Player(), key: const ValueKey('player2')),
+        ],
+        child: const Home(),
+      ),
     );
   }
 }
