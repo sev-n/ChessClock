@@ -15,12 +15,12 @@ class PlayerOne extends ChangeNotifier{
   }
 
   void updateTime(){
-    time--;
+    time == 0 ? time : time--; // try this
     notifyListeners();
   }
 }
 
-// Tryy this
+// ** Tryy **
 class PlayerTwo extends ChangeNotifier{
   bool isClicked = false;
   int time = 120;
@@ -36,7 +36,7 @@ class PlayerTwo extends ChangeNotifier{
   }
 
   void updateTime(){
-    time--;
+    time == 0 ? time : time--;
     notifyListeners();
   }
 }
