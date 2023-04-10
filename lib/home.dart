@@ -17,8 +17,10 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     Timer.periodic(const Duration(seconds: 1), (t) {
-      var player = Provider.of<Player>(context, listen: false);
-      player.updateTime();
+      var p1 = Provider.of<PlayerOne>(context, listen: false);
+      var p2 = Provider.of<PlayerTwo>(context, listen: false);
+      p1.updateTime();
+      p2.updateTime();
     });
     super.initState();
   }
@@ -34,11 +36,13 @@ class _HomeState extends State<Home> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.5,
               color: Colors.grey,
-              child: Consumer<Player>(
+              child: Consumer<PlayerOne>(
                 builder: (context, p1, child) {
                   return Text(
                     p1.getTime().toString(),
-                    style: const TextStyle(fontSize: 60),
+                    style: const TextStyle(
+                      fontSize: 60,
+                    ),
                   );
                 },
               ),
@@ -46,14 +50,20 @@ class _HomeState extends State<Home> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.5,
-                color: Colors.blueGrey,
-                child: const Text(
-                    '00:00',
-                    style: TextStyle(fontSize: 60),
-                  )
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  color: Colors.blueGrey,
+                  child: Consumer<PlayerTwo>(
+                builder: (context, p2, child) {
+                  return Text(
+                    p2.getTime().toString(),
+                    style: const TextStyle(
+                      fontSize: 60,
+                    ),
+                  );
+                },
+              ),
               ),
             )
           ],

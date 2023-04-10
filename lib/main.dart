@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
       ),
       home: MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => Player()),
-          ChangeNotifierProvider(create: (_) => Player(), key: const ValueKey('player2')),
+          ChangeNotifierProvider<PlayerOne>(create: (_) => PlayerOne()),
+          ChangeNotifierProvider<PlayerTwo>(create: (_) => PlayerTwo()),
         ],
         child: const Home(),
       ),

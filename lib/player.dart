@@ -1,17 +1,42 @@
 import 'package:flutter/material.dart';
 
-class Player extends ChangeNotifier{
-  late bool isClicked;
-  int time = 60;
+class PlayerOne extends ChangeNotifier{
+  bool isClicked = false;
+  int time = 70;
 
   int getTime() => time;
 
   // if clicked so the time of will pause
   bool getifClicked() => isClicked;
 
+  void toggleClicked(){
+    isClicked = !isClicked;
+    notifyListeners();
+  }
+
   void updateTime(){
     time--;
     notifyListeners();
   }
+}
 
+// Tryy this
+class PlayerTwo extends ChangeNotifier{
+  bool isClicked = false;
+  int time = 120;
+
+  int getTime() => time;
+
+  // if clicked so the time of will pause
+  bool getifClicked() => isClicked;
+
+  void toggleClicked(){
+    isClicked = !isClicked;
+    notifyListeners();
+  }
+
+  void updateTime(){
+    time--;
+    notifyListeners();
+  }
 }
