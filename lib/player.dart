@@ -1,42 +1,35 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
-class PlayerOne extends ChangeNotifier{
+class Player extends ChangeNotifier {
   bool isClicked = false;
-  int time = 70;
+  int time;
+
+  Player(this.time);
 
   int getTime() => time;
 
-  // if clicked so the time of will pause
   bool getifClicked() => isClicked;
 
-  void toggleClicked(){
+  void toggleClicked() {
     isClicked = !isClicked;
     notifyListeners();
   }
 
-  void updateTime(){
-    time == 0 ? time : time--; // try this
+  void updateTime() {
+    time == 0 ? time : time--;
     notifyListeners();
   }
 }
 
-// ** Tryy **
-class PlayerTwo extends ChangeNotifier{
-  bool isClicked = false;
-  int time = 120;
 
-  int getTime() => time;
+class PlayerOne extends Player {
+  PlayerOne() : super(70);
 
-  // if clicked so the time of will pause
-  bool getifClicked() => isClicked;
+  bool playerClicked = false;
+}
 
-  void toggleClicked(){
-    isClicked = !isClicked;
-    notifyListeners();
-  }
+class PlayerTwo extends Player {
+  PlayerTwo() : super(120);
 
-  void updateTime(){
-    time == 0 ? time : time--;
-    notifyListeners();
-  }
+  bool playerClicked = false;
 }

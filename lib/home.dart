@@ -12,61 +12,53 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  //int secs = 60;
 
-  // @override
-  // void initState() {
-  //   Timer.periodic(const Duration(seconds: 1), (t) {
-  //     var p1 = Provider.of<PlayerOne>(context, listen: false);
-  //     var p2 = Provider.of<PlayerTwo>(context, listen: false);
-  //     p1.updateTime();
-  //     p2.updateTime();
-  //   });
-  //   super.initState();
-  // }
+  void clockStart(var player) {
+    //var p1 = Provider.of<PlayerOne>(context, listen: false);
 
-  void playerOne() {
     Timer.periodic(const Duration(seconds: 1), (t) {
-      var p1 = Provider.of<PlayerOne>(context, listen: false);
-      p1.updateTime();
-      p1.toggleClicked();
+      player.updateTime();
     });
   }
 
-    void playerTwo() {
-    Timer.periodic(const Duration(seconds: 1), (t) {
-      var p2 = Provider.of<PlayerTwo>(context, listen: false);
-      p2.updateTime();
-      p2.toggleClicked();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+    var player1 = Provider.of<PlayerOne>(context, listen: false);
+    var player2 = Provider.of<PlayerTwo>(context, listen: false);
+
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: [
-            GestureDetector(
-              onTap: () {
-                playerOne();
-              },
-              child: Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.45,
-                color: Colors.grey,
-                child: Consumer<PlayerOne>(
-                  builder: (context, p1, child) {
-                    return Text(
-                      p1.getTime().toString(),
-                      style: const TextStyle(
-                        fontSize: 60,
-                      ),
-                    );
-                  },
-                ),
-              ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.45,
+              child: Consumer<PlayerOne>(
+                builder: (context, p1, child) {
+                return ElevatedButton(
+                  onPressed: p1.getifClicked()
+                      ? null
+                      : () {
+                          clockStart(player2);
+                          p1.toggleClicked();
+                        },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    disabledBackgroundColor: Colors.grey,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero, // button border radius
+                    ),
+                  ),
+                  child: Text(  
+                    p1.getTime().toString(),
+                    style: const TextStyle(
+                      fontSize: 60,
+                    ),
+                  ),
+                );
+              }),
             ),
             Center(
               child: Container(
@@ -77,26 +69,34 @@ class _HomeState extends State<Home> {
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: GestureDetector(
-                onTap: (){
-                  playerTwo();
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.45,
-                  color: Colors.blueGrey,
-                  child: Consumer<PlayerTwo>(
-                    builder: (context, p2, child) {
-                      return Text(
-                        p2.getTime().toString(),
-                        style: const TextStyle(
-                          fontSize: 60,
-                        ),
-                      );
-                    },
-                  ),
-                ),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.45,
+                child: Consumer<PlayerTwo>(
+                  builder: (context, p2, child) {
+                  return ElevatedButton(
+                    onPressed: p2.getifClicked()
+                        ? null
+                        : () {
+                            clockStart(player1);
+                            p2.toggleClicked();
+                          },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue, 
+                      foregroundColor: Colors.red,
+                      disabledBackgroundColor: Colors.grey,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero, // button border radius
+                      ),
+                    ),
+                    child: Text(
+                      p2.getTime().toString(),
+                      style: const TextStyle(
+                        fontSize: 60,
+                      ),
+                    ),
+                  );
+                }),
               ),
             )
           ],
