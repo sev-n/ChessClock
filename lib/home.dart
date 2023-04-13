@@ -12,16 +12,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-  void clockStart(var player) {
-    //var p1 = Provider.of<PlayerOne>(context, listen: false);
-
-    Timer.periodic(const Duration(seconds: 1), (t) {
-      player.updateTime();
-    });
-  }
-
-
   @override
   Widget build(BuildContext context) {
     var player1 = Provider.of<PlayerOne>(context, listen: false);
@@ -34,15 +24,15 @@ class _HomeState extends State<Home> {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.45,
-              child: Consumer<PlayerOne>(
-                builder: (context, p1, child) {
+              child: Consumer<PlayerOne>(builder: (context, p1, child) {
                 return ElevatedButton(
-                  onPressed: p1.getifClicked()
-                      ? null
-                      : () {
-                          clockStart(player2);
-                          p1.toggleClicked();
-                        },
+                  onPressed: p1.isClicked ? () {
+                    if(player1.timeActive == true){
+                        player1.playerTimePause();
+                      }
+                    player2.clockStart(player2);
+                    debugPrint('$player2.timeActive');
+                  } : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white,
@@ -51,7 +41,7 @@ class _HomeState extends State<Home> {
                       borderRadius: BorderRadius.zero, // button border radius
                     ),
                   ),
-                  child: Text(  
+                  child: Text(
                     p1.getTime().toString(),
                     style: const TextStyle(
                       fontSize: 60,
@@ -72,17 +62,17 @@ class _HomeState extends State<Home> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.45,
-                child: Consumer<PlayerTwo>(
-                  builder: (context, p2, child) {
+                child: Consumer<PlayerTwo>(builder: (context, p2, child) {
                   return ElevatedButton(
-                    onPressed: p2.getifClicked()
-                        ? null
-                        : () {
-                            clockStart(player1);
-                            p2.toggleClicked();
-                          },
+                    onPressed: () {
+                      if(player2.timeActive == true){
+                        player2.playerTimePause();
+                      }
+                      player1.clockStart(player1);
+                      
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue, 
+                      backgroundColor: Colors.blue,
                       foregroundColor: Colors.red,
                       disabledBackgroundColor: Colors.grey,
                       shape: const RoundedRectangleBorder(
