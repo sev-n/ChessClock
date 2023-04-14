@@ -5,22 +5,21 @@ import 'package:flutter/foundation.dart';
 Timer? timer;
 
 class Player extends ChangeNotifier {
-  bool isClicked = true;
   int time;
-
   bool timeActive = false;
+  bool touch = true;
 
   Player(this.time);
 
-  int getTime() => time;
-
-  bool getifClicked() => isClicked;
-
-
-  void toggleClicked() {
-    isClicked = !isClicked;
+  void enabledTouch(){
+    touch = true;
     notifyListeners();
   }
+  void disabledTouch() {
+    touch = false;
+    notifyListeners();
+  }
+  int getTime() => time;
 
   void updateTime() {
     time == 0 ? time : time--;
@@ -28,7 +27,6 @@ class Player extends ChangeNotifier {
   }
 
   void clockStart(var player) {
-    //var p1 = Provider.of<PlayerOne>(context, listen: false);
     player.timeActive = true;
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
       player.updateTime();

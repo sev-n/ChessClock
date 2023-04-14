@@ -26,13 +26,17 @@ class _HomeState extends State<Home> {
               height: MediaQuery.of(context).size.height * 0.45,
               child: Consumer<PlayerOne>(builder: (context, p1, child) {
                 return ElevatedButton(
-                  onPressed: p1.isClicked ? () {
-                    if(player1.timeActive == true){
-                        player1.playerTimePause();
-                      }
-                    player2.clockStart(player2);
-                    debugPrint('$player2.timeActive');
-                  } : null,
+                  onPressed: p1.touch
+                      ? () {
+                          p1.disabledTouch();
+                          if (player1.timeActive == true) {
+                            player1.playerTimePause();
+                          }
+                          player2.enabledTouch();
+                          player2.clockStart(player2);
+                          debugPrint('$player2.timeActive');
+                        }
+                      : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white,
@@ -64,16 +68,19 @@ class _HomeState extends State<Home> {
                 height: MediaQuery.of(context).size.height * 0.45,
                 child: Consumer<PlayerTwo>(builder: (context, p2, child) {
                   return ElevatedButton(
-                    onPressed: () {
-                      if(player2.timeActive == true){
-                        player2.playerTimePause();
-                      }
-                      player1.clockStart(player1);
-                      
-                    },
+                    onPressed: p2.touch
+                        ? () {
+                            p2.disabledTouch();
+                            if (player2.timeActive == true) {
+                              player2.playerTimePause();
+                            }
+                            player1.enabledTouch();
+                            player1.clockStart(player1);
+                          }
+                        : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
-                      foregroundColor: Colors.red,
+                      foregroundColor: Colors.white,
                       disabledBackgroundColor: Colors.grey,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero, // button border radius
