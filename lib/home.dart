@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:chess_clock/player.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
