@@ -22,7 +22,7 @@ class Player extends ChangeNotifier {
   int getTime() => time;
 
   void updateTime() {
-    time == 0 ? time : time--;
+    time == 0 ? disabledTouch() : time--;
     notifyListeners();
   }
 
@@ -41,9 +41,9 @@ class Player extends ChangeNotifier {
 }
 
 class PlayerOne extends Player {
-  PlayerOne() : super(70);
+  PlayerOne() : super(20);
 }
 
 class PlayerTwo extends Player {
-  PlayerTwo() : super(120);
+  PlayerTwo() : super(20);
 }
